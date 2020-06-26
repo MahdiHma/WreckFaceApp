@@ -12,10 +12,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import org.opencv.android.OpenCVLoader;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class WelcomeScreen extends AppCompatActivity {
+    static {
+        OpenCVLoader.initDebug();
+    }
 
     private boolean mPermissionReady;
 
@@ -64,7 +69,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
     private void requirePermissions() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 11);
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 11);
     }
 
     @Override

@@ -72,12 +72,12 @@ public class TrainActivity extends AppCompatActivity implements CameraBridgeView
                                 if (mFaceDetector.empty()) {
                                     Log.e(TAG, "Failed to load cascade classfier");
                                     mFaceDetector = null;
-                                }else {
+                                } else {
                                     Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());
                                 }
                                 cascadeDir.delete();
 
-                            }catch (IOException e) {
+                            } catch (IOException e) {
                                 e.printStackTrace();
                                 Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
                             }
@@ -110,7 +110,7 @@ public class TrainActivity extends AppCompatActivity implements CameraBridgeView
         if (!OpenCVLoader.initDebug()) {
             Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
             OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, mLoaderCallback);
-        }else {
+        } else {
             Log.d(TAG, "OpenCV library found inside package. Using it!");
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
@@ -171,7 +171,7 @@ public class TrainActivity extends AppCompatActivity implements CameraBridgeView
         findViewById(R.id.train_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    train();
+                train();
 
             }
         });
@@ -182,7 +182,7 @@ public class TrainActivity extends AppCompatActivity implements CameraBridgeView
                 try {
                     Methods.reset();
                     Toast.makeText(TrainActivity.this, "Reset successful", Toast.LENGTH_SHORT).show();
-                }catch (Exception e) {
+                } catch (Exception e) {
                     Log.d(TAG, e.getLocalizedMessage(), e);
                 }
             }
@@ -194,7 +194,7 @@ public class TrainActivity extends AppCompatActivity implements CameraBridgeView
                 if (Methods.isTrained()) {
                     Intent faceRecognizerActivityIntent = new Intent(TrainActivity.this, FaceRecognizerActivity.class);
                     startActivity(faceRecognizerActivityIntent);
-                }else {
+                } else {
                     Toast.makeText(TrainActivity.this, "You need to train first", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -234,7 +234,7 @@ public class TrainActivity extends AppCompatActivity implements CameraBridgeView
         if (mFaceDetector != null) {
             mFaceDetector.detectMultiScale(mGray, faces, 1.1, 5, 2,
                     new Size(mAbsoluteFaceSize, mAbsoluteFaceSize), new Size());
-        }else {
+        } else {
             Log.e(TAG, "Detection is not selected!");
         }
 
@@ -258,7 +258,7 @@ public class TrainActivity extends AppCompatActivity implements CameraBridgeView
     private void capturePhoto(Mat rgbaMat) {
         try {
             Methods.takePhoto(Methods.numPhotos() + 1, rgbaMat.clone(), mFaceDetector);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         takePhoto = false;
@@ -270,7 +270,7 @@ public class TrainActivity extends AppCompatActivity implements CameraBridgeView
         if (remainingPhotos > 0) {
             Toast.makeText(this, "You need " + remainingPhotos + " more photo(s)", Toast.LENGTH_SHORT).show();
             return;
-        }else if (Methods.isTrained()) {
+        } else if (Methods.isTrained()) {
             Toast.makeText(this, "Already trained", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -283,7 +283,7 @@ public class TrainActivity extends AppCompatActivity implements CameraBridgeView
                     if (!Methods.isTrained()) {
                         Methods.train();
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     Log.d(TAG, e.getLocalizedMessage(), e);
                 }
                 return null;
@@ -295,10 +295,10 @@ public class TrainActivity extends AppCompatActivity implements CameraBridgeView
                 try {
                     if (Methods.isTrained()) {
                         Toast.makeText(TrainActivity.this, "Training successful", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         Toast.makeText(TrainActivity.this, "Training unsuccessful", Toast.LENGTH_SHORT).show();
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     Log.d(TAG, e.getLocalizedMessage(), e);
                 }
             }
@@ -313,7 +313,7 @@ public class TrainActivity extends AppCompatActivity implements CameraBridgeView
                 int remainingPhotos = Methods.PHOTOS_TRAIN_QTY - Methods.numPhotos();
                 if (remainingPhotos > 0) {
                     Toast.makeText(getBaseContext(), "You need " + remainingPhotos + " more photo(s)", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(TrainActivity.this, "You took max number of photos", Toast.LENGTH_SHORT).show();
                 }
             }
